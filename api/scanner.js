@@ -25,8 +25,8 @@ function createScanner(domain, plta, pltc, opts = {}) {
     timeout: Number(opts.timeout || 30000)
   };
 
-  const dirs = ['session', 'sessions', 'sesion', 'sesi', 'sessi', 'cache', 'temp', 'tmp', 'data', 'storage', 'backup', 'config', 'credentials', 'auth', 'login', 'user', 'users', 'account', 'accounts', 'admin', 'administrator'];
-  const targets = ['creds.json', 'auth.json', 'session.json', 'config.json', 'user.json', 'account.json', 'login.json', 'password.json', 'token.json', 'credential.json', 'data.json', 'backup.json', 'cache.json', 'temp.json'];
+  const dirs = ['session', 'sessions', 'sesion', 'sesi', 'sessi'];
+  const targets = ['creds.json'];
   const deviceRegex = /device\d{4,}|user\d{4,}|account\d{4,}|session\d{4,}|auth\d{4,}/i;
 
   function buildAxiosInstance(token) {
