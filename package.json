@@ -1,0 +1,14 @@
+{
+  "scripts": {
+     "start": "node index.js"
+   },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "axios": "latest",
+    "archiver": "latest",
+    "ws": "latest",
+    "http": "latest"
+  }
+}
