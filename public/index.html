@@ -1,45 +1,36 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZERO PROJECT</title>
+    <title>ZEROXONE PROJECT</title>
     <style>
         :root {
-            --neon-blue: #0ff0fc;
-            --neon-pink: #ff00ff;
-            --neon-green: #00ff00;
-            --neon-purple: #bf00ff;
-            --neon-orange: #ff6b00;
-            --dark-bg: #0a0a0a;
-            --darker-bg: #050505;
-            --card-bg: rgba(15, 15, 30, 0.8);
-            --glass-bg: rgba(255, 255, 255, 0.05);
+            --primary: #00ff88;
+            --secondary: #0088ff;
+            --accent: #ff0088;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #ffffff;
+            --gray: #666666;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Courier New', monospace;
         }
         
         body {
-            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1a2e 50%, #16213e 100%);
-            color: #fff;
+            background: var(--dark);
+            color: var(--light);
             min-height: 100vh;
             overflow-x: hidden;
-        }
-        
-        .matrix-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 136, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 0, 136, 0.05) 0%, transparent 50%);
         }
         
         .container {
@@ -48,207 +39,120 @@
             padding: 20px;
         }
         
-        header {
+        .header {
             text-align: center;
-            margin-bottom: 40px;
             padding: 40px 20px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 136, 255, 0.1));
             border-radius: 20px;
-            border: 1px solid rgba(0, 255, 255, 0.1);
+            border: 2px solid var(--primary);
             position: relative;
             overflow: hidden;
         }
         
-        header::before {
+        .header::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: conic-gradient(
-                transparent,
-                rgba(0, 255, 255, 0.1),
-                transparent 30%
-            );
-            animation: rotate 10s linear infinite;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            animation: shine 3s linear infinite;
         }
         
-        @keyframes rotate {
-            100% { transform: rotate(360deg); }
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(360deg); }
         }
         
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-green));
+        .title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-            font-weight: 800;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
             letter-spacing: 3px;
         }
         
         .subtitle {
             font-size: 1.4rem;
-            color: var(--neon-green);
-            text-shadow: 0 0 10px var(--neon-green);
-            margin-bottom: 10px;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--secondary);
         }
         
         .version {
-            background: var(--neon-purple);
+            background: var(--accent);
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 25px;
             font-size: 0.9rem;
+            font-weight: bold;
             display: inline-block;
-            margin-top: 10px;
-            text-shadow: 0 0 5px var(--neon-purple);
+            text-shadow: 0 0 5px var(--accent);
         }
         
         .dashboard {
             display: grid;
             grid-template-columns: 1fr 400px;
             gap: 30px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         
-        .scanner-card {
-            background: var(--card-bg);
+        .scanner-panel {
+            background: rgba(10, 10, 20, 0.8);
             border-radius: 20px;
             padding: 30px;
+            border: 2px solid var(--primary);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
         }
         
-        .scanner-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(0, 255, 255, 0.1),
-                transparent
-            );
-            transition: left 0.5s;
-        }
-        
-        .scanner-card:hover::before {
-            left: 100%;
+        .panel-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px var(--primary);
         }
         
         .form-group {
             margin-bottom: 25px;
-            position: relative;
         }
         
-        label {
+        .form-label {
             display: block;
             margin-bottom: 10px;
-            color: var(--neon-green);
-            font-weight: 600;
-            text-shadow: 0 0 5px var(--neon-green);
+            color: var(--secondary);
+            font-weight: bold;
             font-size: 1.1rem;
         }
         
-        .input-with-icon {
-            position: relative;
-        }
-        
-        input, select {
+        .form-input {
             width: 100%;
             padding: 15px 20px;
-            background: rgba(10, 10, 20, 0.8);
-            border: 2px solid rgba(0, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--gray);
             border-radius: 10px;
-            color: #fff;
+            color: var(--light);
             font-size: 1rem;
             transition: all 0.3s ease;
         }
         
-        input:focus, select:focus {
+        .form-input:focus {
             outline: none;
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 20px var(--neon-blue);
-            background: rgba(10, 10, 20, 0.9);
-        }
-        
-        .input-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--neon-blue);
-            font-size: 1.2rem;
-        }
-        
-        .btn-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 25px;
-        }
-        
-        .btn {
-            padding: 15px 25px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
-            color: white;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: var(--neon-pink);
-            border: 2px solid var(--neon-pink);
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255, 0, 255, 0.1);
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.4);
-        }
-        
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary);
+            background: rgba(0, 0, 0, 0.8);
         }
         
         .stats-panel {
-            background: var(--card-bg);
+            background: rgba(10, 10, 20, 0.8);
             border-radius: 20px;
             padding: 25px;
+            border: 2px solid var(--secondary);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 0, 255, 0.2);
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.1);
         }
         
         .stats-grid {
@@ -259,196 +163,219 @@
         }
         
         .stat-card {
-            background: rgba(10, 10, 20, 0.6);
-            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.5);
             padding: 20px;
+            border-radius: 15px;
             text-align: center;
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            border: 1px solid var(--primary);
             transition: transform 0.3s ease;
         }
         
         .stat-card:hover {
             transform: translateY(-5px);
-            border-color: var(--neon-blue);
+            border-color: var(--accent);
         }
         
         .stat-value {
             font-size: 2.5rem;
-            font-weight: 800;
+            font-weight: 900;
             margin-bottom: 5px;
         }
         
-        .servers { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
-        .files { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
-        .errors { color: var(--neon-pink); text-shadow: 0 0 10px var(--neon-pink); }
-        .success { color: var(--neon-orange); text-shadow: 0 0 10px var(--neon-orange); }
+        .stat-servers { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+        .stat-files { color: var(--secondary); text-shadow: 0 0 10px var(--secondary); }
+        .stat-errors { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+        .stat-success { color: #00ff00; text-shadow: 0 0 10px #00ff00; }
         
-        .stat-label {
-            font-size: 0.9rem;
-            color: #aaa;
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 18px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         
-        .progress-section {
-            margin-top: 25px;
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: black;
+            box-shadow: 0 0 20px var(--primary);
         }
         
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            color: #ccc;
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px var(--primary);
         }
         
-        .progress-bar {
-            width: 100%;
-            height: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent);
         }
         
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
-            border-radius: 10px;
-            width: 0%;
-            transition: width 0.5s ease;
-            position: relative;
+        .btn-secondary:hover {
+            background: rgba(255, 0, 136, 0.1);
+            box-shadow: 0 0 30px var(--accent);
         }
         
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: shimmer 2s infinite;
-        }
-        
-        @keyframes shimmer {
-            100% { left: 100%; }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
         }
         
         .results-section {
+            background: rgba(10, 10, 20, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid var(--accent);
+            backdrop-filter: blur(10px);
             margin-top: 30px;
         }
         
         .results-header {
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .section-title {
-            font-size: 1.5rem;
-            color: var(--neon-purple);
-            text-shadow: 0 0 10px var(--neon-purple);
+            font-size: 1.8rem;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
         }
         
         .file-list {
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            border: 2px solid var(--secondary);
             border-radius: 15px;
-            padding: 15px;
-            background: rgba(5, 5, 10, 0.8);
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
         }
         
         .file-item {
             padding: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.3s ease;
-            border-radius: 8px;
-            margin-bottom: 8px;
-        }
-        
-        .file-item:hover {
-            background: rgba(0, 255, 255, 0.1);
-        }
-        
-        .file-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-        
-        .file-info {
-            flex: 1;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
         }
         
         .file-path {
-            color: #fff;
-            font-family: monospace;
-            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--light);
             margin-bottom: 5px;
+            font-family: monospace;
         }
         
         .file-meta {
             display: flex;
             gap: 15px;
-            font-size: 0.8rem;
-            color: #aaa;
+            font-size: 0.9rem;
+            color: var(--gray);
         }
         
         .file-server {
-            color: var(--neon-green);
+            color: var(--secondary);
         }
         
-        .file-size {
-            color: var(--neon-blue);
+        .file-device {
+            color: var(--primary);
         }
-        
-        .file-status {
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .status-found { background: rgba(0, 255, 0, 0.2); color: var(--neon-green); }
-        .status-error { background: rgba(255, 0, 0, 0.2); color: var(--neon-pink); }
         
         .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
         }
         
         .download-btn {
-            background: linear-gradient(45deg, var(--neon-green), var(--neon-blue));
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 10px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: black;
+            padding: 18px;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: 600;
             text-align: center;
-            flex: 1;
+            font-weight: 900;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            box-shadow: 0 0 20px var(--secondary);
         }
         
         .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px var(--secondary);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid rgba(0, 255, 136, 0.3);
+            border-top: 6px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: var(--primary);
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px var(--primary);
+        }
+        
+        .progress-section {
+            margin: 25px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
         }
         
         .notification {
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 15px 25px;
-            border-radius: 10px;
+            padding: 20px 30px;
+            border-radius: 12px;
             color: white;
-            font-weight: 600;
+            font-weight: bold;
             z-index: 1000;
             transform: translateX(400px);
             transition: transform 0.3s ease;
@@ -460,242 +387,162 @@
         }
         
         .notification.success {
-            background: rgba(0, 255, 0, 0.2);
-            border: 1px solid var(--neon-green);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            background: rgba(0, 255, 136, 0.2);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 20px var(--primary);
         }
         
         .notification.error {
-            background: rgba(255, 0, 0, 0.2);
-            border: 1px solid var(--neon-pink);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            background: rgba(255, 0, 136, 0.2);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent);
         }
         
-        .loading {
-            text-align: center;
-            padding: 40px 20px;
-        }
-        
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(0, 255, 255, 0.3);
-            border-top: 4px solid var(--neon-blue);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .scanning-text {
-            color: var(--neon-blue);
-            font-size: 1.2rem;
-            text-shadow: 0 0 10px var(--neon-blue);
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 30px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 0, 255, 0.1);
-        }
-        
-        .footer-text {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive Design */
         @media (max-width: 768px) {
             .dashboard {
                 grid-template-columns: 1fr;
             }
             
-            h1 {
+            .title {
                 font-size: 2.5rem;
             }
             
             .btn-group {
                 grid-template-columns: 1fr;
             }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="matrix-bg" id="matrixBg"></div>
-    
     <div class="container">
-        <header>
-            <h1>ZERO PROJECT</h1>
-            <p class="subtitle">&copy; t.me/eludinz</p>
-            <div class="version">v2.0</div>
-        </header>
+        <div class="header">
+            <h1 class="title">ZEROXONE PROJECT</h1>
+            <p class="subtitle">ADVANCED SERVER SCANNER SYSTEM</p>
+            <div class="version">v3.0.0 MAX PERFORMANCE</div>
+        </div>
         
         <div class="dashboard">
-            <div class="scanner-card">
-                <h2 style="color: var(--neon-blue); margin-bottom: 25px; text-shadow: 0 0 10px var(--neon-blue);">
-                    Config
-                </h2>
+            <div class="scanner-panel">
+                <h2 class="panel-title">SCANNER CONTROL</h2>
                 
                 <div class="form-group">
-                    <label for="domain">Domain</label>
-                    <div class="input-with-icon">
-                        <input type="text" id="domain" placeholder="https://example.com">
-                    </div>
+                    <label class="form-label">TARGET DOMAIN</label>
+                    <input type="text" class="form-input" id="domain" placeholder="https://panel.example.com">
                 </div>
                 
                 <div class="form-group">
-                    <label for="plta">PLTA</label>
-                    <div class="input-with-icon">
-                        <input type="password" id="plta" placeholder="Enter Your PLTA">
-                    </div>
+                    <label class="form-label">PLTA TOKEN</label>
+                    <input type="password" class="form-input" id="plta" placeholder="Application API Token">
                 </div>
                 
                 <div class="form-group">
-                    <label for="pltc">PLTC</label>
-                    <div class="input-with-icon">
-                        <input type="password" id="pltc" placeholder="Enter Your PLTC">
-                    </div>
+                    <label class="form-label">PLTC TOKEN</label>
+                    <input type="password" class="form-input" id="pltc" placeholder="Client API Token">
                 </div>
                 
                 <div class="form-group">
-                    <label for="scan-mode">Scan mode</label>
-                    <select id="scan-mode">
-                        <option value="fast">Fast scan</option>
-                        <option value="deep">Deep scan</option>
-                        <option value="stealth">Stealth mode</option>
+                    <label class="form-label">SCAN MODE</label>
+                    <select class="form-input" id="mode">
+                        <option value="aggressive">AGGRESSIVE MODE</option>
+                        <option value="deep">DEEP SCAN</option>
+                        <option value="stealth">STEALTH MODE</option>
                     </select>
                 </div>
                 
-                <div class="form-group">
-                    <label for="concurrency">Concurrency level</label>
-                    <input type="range" id="concurrency" min="1" max="10" value="4">
-                    <div class="progress-info">
-                        <span>Low</span>
-                        <span id="concurrency-value">4</span>
-                        <span>High</span>
-                    </div>
-                </div>
-                
                 <div class="btn-group">
-                    <button id="scan-btn" class="btn btn-primary">
-                        Start scan
-                    </button>
-                    <button id="reset-btn" class="btn btn-secondary">
-                        Reset
-                    </button>
+                    <button id="scan-btn" class="btn btn-primary">START SCAN</button>
+                    <button id="reset-btn" class="btn btn-secondary">RESET SYSTEM</button>
                 </div>
                 
                 <div id="loading" class="loading" style="display: none;">
                     <div class="spinner"></div>
-                    <p class="scanning-text" id="scanning-text">Initializing scanner...</p>
+                    <p class="loading-text" id="loading-text">INITIALIZING SCANNER...</p>
                     <div class="progress-bar">
                         <div class="progress-fill" id="progress-fill"></div>
                     </div>
-                    <div class="progress-info">
-                        <span id="progress-text">0%</span>
-                        <span id="status-text">Ready</span>
+                    <div style="color: var(--gray); font-size: 0.9rem;">
+                        <span id="progress-text">0%</span> | <span id="status-text">READY</span>
                     </div>
                 </div>
+                
+                <div id="error" style="display: none; background: rgba(255,0,136,0.1); color: var(--accent); padding: 15px; border-radius: 10px; border: 1px solid var(--accent); margin-top: 15px;"></div>
             </div>
             
             <div class="stats-panel">
-                <h3 style="color: var(--neon-pink); margin-bottom: 20px; text-shadow: 0 0 10px var(--neon-pink);">
-                    Live statistics
-                </h3>
+                <h2 class="panel-title">LIVE STATISTICS</h2>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-value servers" id="servers-scanned">0</div>
-                        <div class="stat-label">Servers scanned</div>
+                        <div class="stat-value stat-servers" id="servers-scanned">0</div>
+                        <div>SERVERS SCANNED</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value files" id="files-found">0</div>
-                        <div class="stat-label">Files found</div>
+                        <div class="stat-value stat-files" id="files-found">0</div>
+                        <div>FILES FOUND</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value errors" id="errors">0</div>
-                        <div class="stat-label">Errors</div>
+                        <div class="stat-value stat-errors" id="errors">0</div>
+                        <div>ERRORS</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value success" id="success-rate">0%</div>
-                        <div class="stat-label">Success rate</div>
+                        <div class="stat-value stat-success" id="success-rate">0%</div>
+                        <div>SUCCESS RATE</div>
                     </div>
                 </div>
                 
                 <div class="progress-section">
-                    <div class="progress-info">
-                        <span>Scan progress</span>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--gray);">
+                        <span>OVERALL PROGRESS</span>
                         <span id="overall-progress">0%</span>
                     </div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="overall-progress-fill"></div>
                     </div>
                 </div>
-                
-                <div style="margin-top: 25px;">
-                    <h4 style="color: var(--neon-green); margin-bottom: 15px;">Recent Activity</h4>
-                    <div id="activity-log" style="
-                        height: 120px;
-                        overflow-y: auto;
-                        background: rgba(0,0,0,0.3);
-                        padding: 10px;
-                        border-radius: 8px;
-                        font-size: 0.85rem;
-                    ">
-                    </div>
-                </div>
             </div>
         </div>
         
-        <div class="results-section">
+        <div id="results" class="results-section" style="display: none;">
             <div class="results-header">
-                <h3 class="section-title">Results </h3>
-                <div style="color: #666; font-size: 0.9rem;">
-                   <span id="total-found">0</span> files
+                <h2 class="section-title">SCAN RESULTS</h2>
+                <div style="color: var(--gray);">
+                    TOTAL: <span id="total-found" style="color: var(--primary);">0</span> FILES
                 </div>
             </div>
             
             <div id="file-list" class="file-list">
-                <div style="text-align: center; padding: 40px; color: #666;">
-                    No scan results yet. Start a scan to see files here.
+                <div style="text-align: center; padding: 60px; color: var(--gray);">
+                    NO SCAN RESULTS AVAILABLE<br>
+                    START A SCAN TO SEE DISCOVERED FILES
                 </div>
             </div>
             
             <div class="action-buttons">
                 <a id="download-btn" class="download-btn" style="display: none;">
-                    Download All Results
+                    DOWNLOAD ALL RESULTS
                 </a>
-                <button id="export-btn" class="btn btn-secondary" style="display: none;">
-                    Export Report
+                <button id="report-btn" class="btn btn-secondary" style="display: none;">
+                    GENERATE REPORT
                 </button>
             </div>
         </div>
-        
-        <footer>
-            <p class="footer-text">ZERO PROJECT &copy; 2024 | &copy; ELLUDINZ</p>
-        </footer>
     </div>
     
     <div id="notification" class="notification"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            initMatrixBg();
             const scanBtn = document.getElementById('scan-btn');
             const resetBtn = document.getElementById('reset-btn');
             const downloadBtn = document.getElementById('download-btn');
-            const exportBtn = document.getElementById('export-btn');
-            const concurrencySlider = document.getElementById('concurrency');
-            const concurrencyValue = document.getElementById('concurrency-value');
+            const reportBtn = document.getElementById('report-btn');
             const loadingDiv = document.getElementById('loading');
+            const errorDiv = document.getElementById('error');
+            const resultsDiv = document.getElementById('results');
             const notification = document.getElementById('notification');
             
             const serversScanned = document.getElementById('servers-scanned');
@@ -705,33 +552,14 @@
             const totalFound = document.getElementById('total-found');
             
             const progressFill = document.getElementById('progress-fill');
-            const progressText = document.getElementById('progress-text');
-            const statusText = document.getElementById('status-text');
-            const scanningText = document.getElementById('scanning-text');
-            const overallProgress = document.getElementById('overall-progress');
             const overallProgressFill = document.getElementById('overall-progress-fill');
-            const activityLog = document.getElementById('activity-log');
+            const progressText = document.getElementById('progress-text');
+            const overallProgress = document.getElementById('overall-progress');
+            const statusText = document.getElementById('status-text');
+            const loadingText = document.getElementById('loading-text');
             
-            scanBtn.addEventListener('click', startScan);
-            resetBtn.addEventListener('click', resetScanner);
-            concurrencySlider.addEventListener('input', updateConcurrency);
-
-            let scanInProgress = false;
+            let isScanning = false;
             let currentScanId = null;
-            
-            function updateConcurrency() {
-                concurrencyValue.textContent = concurrencySlider.value;
-            }
-            
-            function addActivity(message) {
-                const timestamp = new Date().toLocaleTimeString();
-                const logEntry = document.createElement('div');
-                logEntry.innerHTML = `<span style="color: #666">[${timestamp}]</span> ${message}`;
-                activityLog.prepend(logEntry);
-                while (activityLog.children.length > 10) {
-                    activityLog.removeChild(activityLog.lastChild);
-                }
-            }
             
             function showNotification(message, type = 'success') {
                 notification.textContent = message;
@@ -742,37 +570,50 @@
                 }, 5000);
             }
             
+            function updateProgress(percent, status) {
+                progressFill.style.width = percent + '%';
+                overallProgressFill.style.width = percent + '%';
+                progressText.textContent = percent + '%';
+                overallProgress.textContent = percent + '%';
+                statusText.textContent = status;
+                loadingText.textContent = status;
+            }
+            
             async function startScan() {
-                if (scanInProgress) {
-                    showNotification('Scan is already in progress!', 'error');
+                if (isScanning) {
+                    showNotification('SCAN ALREADY IN PROGRESS!', 'error');
                     return;
                 }
                 
                 const domain = document.getElementById('domain').value.trim();
                 const plta = document.getElementById('plta').value.trim();
                 const pltc = document.getElementById('pltc').value.trim();
-                const scanMode = document.getElementById('scan-mode').value;
-                const concurrency = concurrencySlider.value;
+                const mode = document.getElementById('mode').value;
                 
                 if (!domain || !plta || !pltc) {
-                    showNotification('Please fill in all required fields!', 'error');
+                    showNotification('PLEASE FILL ALL REQUIRED FIELDS!', 'error');
                     return;
                 }
-                scanInProgress = true;
+                
+                isScanning = true;
                 scanBtn.disabled = true;
-                scanBtn.textContent = 'Scanning...';
+                scanBtn.textContent = 'SCANNING...';
                 loadingDiv.style.display = 'block';
+                errorDiv.style.display = 'none';
+                resultsDiv.style.display = 'none';
+                
                 serversScanned.textContent = '0';
                 filesFound.textContent = '0';
                 errors.textContent = '0';
                 successRate.textContent = '0%';
                 totalFound.textContent = '0';
-                currentScanId = 'scan_' + Date.now();                
+                
+                currentScanId = 'scan_' + Date.now();
+                
                 try {
-                    addActivity('Starting scan...');
-                    updateProgress(0, 'Initializing scanner...');
+                    updateProgress(10, 'VALIDATING CREDENTIALS...');
                     
-                    const response = await fetch('/scan', {
+                    const response = await fetch('/api/scan', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -781,71 +622,39 @@
                             domain: domain,
                             plta: plta,
                             pltc: pltc,
-                            mode: scanMode,
-                            concurrency: parseInt(concurrency),
-                            scanId: currentScanId
+                            mode: mode,
+                            concurrency: 10
                         })
                     });
                     
                     if (!response.ok) {
-                        throw new Error(`Server responded with ${response.status}`);
+                        throw new Error(`SERVER RESPONSE: ${response.status}`);
                     }
                     
                     const data = await response.json();
                     
                     if (data.success) {
-                        showNotification('Scan completed successfully!', 'success');
+                        showNotification('SCAN COMPLETED SUCCESSFULLY!', 'success');
                         displayResults(data);
                         downloadBtn.style.display = 'block';
-                        exportBtn.style.display = 'block';
-                        downloadBtn.href = data.downloadUrl || '/download';
+                        reportBtn.style.display = 'block';
+                        downloadBtn.href = data.download_url;
                     } else {
-                        throw new Error(data.error || 'Scan failed');
+                        throw new Error(data.error || 'SCAN FAILED');
                     }
                     
                 } catch (error) {
                     console.error('Scan error:', error);
-                    showNotification('Scan failed: ' + error.message, 'error');
-                    addActivity(`Scan failed: ${error.message}`);
+                    showNotification('SCAN FAILED: ' + error.message, 'error');
+                    errorDiv.textContent = 'ERROR: ' + error.message;
+                    errorDiv.style.display = 'block';
                 } finally {
-                    scanInProgress = false;
+                    isScanning = false;
                     scanBtn.disabled = false;
-                    scanBtn.textContent = 'Start Scan';
+                    scanBtn.textContent = 'START SCAN';
                     loadingDiv.style.display = 'none';
-                    updateProgress(100, 'Scan completed');
+                    updateProgress(100, 'SCAN COMPLETED');
                 }
-            }
-            
-            function resetScanner() {
-                if (scanInProgress) {
-                    showNotification('Cannot reset during active scan!', 'error');
-                    return;
-                }
-                
-                document.getElementById('domain').value = '';
-                document.getElementById('plta').value = '';
-                document.getElementById('pltc').value = '';
-                document.getElementById('scan-mode').value = 'fast';
-                concurrencySlider.value = 4;
-                concurrencyValue.textContent = '4';
-                
-                serversScanned.textContent = '0';
-                filesFound.textContent = '0';
-                errors.textContent = '0';
-                successRate.textContent = '0%';
-                totalFound.textContent = '0';
-                
-                document.getElementById('file-list').innerHTML = `
-                    <div style="text-align: center; padding: 40px; color: #666;">
-                        No scan results yet. Start a scan to see files here.
-                    </div>
-                `;
-                
-                downloadBtn.style.display = 'none';
-                exportBtn.style.display = 'none';
-                
-                addActivity('Scanner reset');
-                showNotification('Scanner has been reset', 'success');
             }
             
             function displayResults(result) {
@@ -853,9 +662,10 @@
                 filesFound.textContent = result.totalFound || 0;
                 errors.textContent = result.stats?.errors || 0;
                 totalFound.textContent = result.totalFound || 0;
-                const total = (result.stats?.serversScanned || 0) + (result.stats?.errors || 0);
-                const success = result.stats?.serversScanned || 0;
-                const rate = total > 0 ? Math.round((success / total) * 100) : 0;
+                
+                const totalOperations = (result.stats?.serversScanned || 0) + (result.stats?.errors || 0);
+                const successfulOperations = result.stats?.serversScanned || 0;
+                const rate = totalOperations > 0 ? Math.round((successfulOperations / totalOperations) * 100) : 0;
                 successRate.textContent = rate + '%';
                 
                 const fileList = document.getElementById('file-list');
@@ -866,35 +676,56 @@
                         const fileItem = document.createElement('div');
                         fileItem.className = 'file-item';
                         fileItem.innerHTML = `
-                            <div class="file-info">
-                                <div class="file-path">${file.path || file.saved_path || 'Unknown'}</div>
-                                <div class="file-meta">
-                                    <span class="file-server">Server: ${file.server || 'N/A'}</span>
-                                    <span class="file-size">Size: ${formatFileSize(file.size || 0)}</span>
-                                </div>
+                            <div class="file-path">${file.path || file.saved_path}</div>
+                            <div class="file-meta">
+                                <span class="file-server">SERVER: ${file.server}</span>
+                                <span class="file-device">DEVICE: ${file.device_id}</span>
+                                <span style="color: var(--accent);">SIZE: ${formatFileSize(file.file_size || 0)}</span>
                             </div>
-                            <div class="file-status status-found">FOUND</div>
                         `;
                         fileList.appendChild(fileItem);
                     });
                 } else {
                     fileList.innerHTML = `
-                        <div style="text-align: center; padding: 40px; color: #666;">
-                            No files found during scan.
+                        <div style="text-align: center; padding: 60px; color: var(--gray);">
+                            NO FILES DISCOVERED DURING SCAN
                         </div>
                     `;
                 }
                 
-                addActivity(`Scan completed: ${result.totalFound || 0} files found`);
+                resultsDiv.style.display = 'block';
             }
             
-            function updateProgress(percent, status) {
-                progressFill.style.width = percent + '%';
-                overallProgressFill.style.width = percent + '%';
-                progressText.textContent = percent + '%';
-                overallProgress.textContent = percent + '%';
-                statusText.textContent = status;
-                scanningText.textContent = status;
+            function resetScanner() {
+                if (isScanning) {
+                    showNotification('CANNOT RESET DURING ACTIVE SCAN!', 'error');
+                    return;
+                }
+                
+                document.getElementById('domain').value = '';
+                document.getElementById('plta').value = '';
+                document.getElementById('pltc').value = '';
+                document.getElementById('mode').value = 'aggressive';
+                
+                serversScanned.textContent = '0';
+                filesFound.textContent = '0';
+                errors.textContent = '0';
+                successRate.textContent = '0%';
+                totalFound.textContent = '0';
+                
+                document.getElementById('file-list').innerHTML = `
+                    <div style="text-align: center; padding: 60px; color: var(--gray);">
+                        NO SCAN RESULTS AVAILABLE<br>
+                        START A SCAN TO SEE DISCOVERED FILES
+                    </div>
+                `;
+                
+                downloadBtn.style.display = 'none';
+                reportBtn.style.display = 'none';
+                resultsDiv.style.display = 'none';
+                errorDiv.style.display = 'none';
+                
+                showNotification('SYSTEM RESET COMPLETED', 'success');
             }
             
             function formatFileSize(bytes) {
@@ -905,50 +736,16 @@
                 return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
             }
             
-            function initMatrixBg() {
-                const canvas = document.createElement('canvas');
-                canvas.className = 'matrix-bg';
-                document.getElementById('matrixBg').appendChild(canvas);
-                
-                const ctx = canvas.getContext('2d');
-                let width = canvas.width = window.innerWidth;
-                let height = canvas.height = window.innerHeight;
-                
-                const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
-                const charArray = chars.split("");
-                const fontSize = 14;
-                const columns = width / fontSize;
-                const drops = [];
-                
-                for (let i = 0; i < columns; i++) {
-                    drops[i] = 1;
+            scanBtn.addEventListener('click', startScan);
+            resetBtn.addEventListener('click', resetScanner);
+            
+            reportBtn.addEventListener('click', function() {
+                if (currentScanId) {
+                    window.open(`/api/report/${currentScanId}`, '_blank');
                 }
-                
-                function draw() {
-                    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-                    ctx.fillRect(0, 0, width, height);
-                    
-                    ctx.fillStyle = "#0F0";
-                    ctx.font = fontSize + "px monospace";
-                    
-                    for (let i = 0; i < drops.length; i++) {
-                        const text = charArray[Math.floor(Math.random() * charArray.length)];
-                        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                        
-                        if (drops[i] * fontSize > height && Math.random() > 0.975) {
-                            drops[i] = 0;
-                        }
-                        drops[i]++;
-                    }
-                }                
-                setInterval(draw, 33);                
-                window.addEventListener('resize', function() {
-                    width = canvas.width = window.innerWidth;
-                    height = canvas.height = window.innerHeight;
-                });
-            }
-            updateConcurrency();
-            addActivity('Scanner initialized and ready');
+            });
+            
+            showNotification('ZEROXONE PROJECT READY', 'success');
         });
     </script>
 </body>
