@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "functions": {
+    "api/scanner.js": {
+      "maxDuration": 300
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/scanner.js"
+    }
+  ]
+}
