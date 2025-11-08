@@ -1,14 +1,14 @@
 {
+  "name": "zeroxone-project",
+  "version": "3.0.0",
+  "main": "api/scanner.js",
   "scripts": {
-     "start": "node index.js"
-   },
+    "dev": "node api/scanner.js",
+    "start": "node api/scanner.js"
+  },
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "multer": "^2.0.2",
+    "express": "latest",
     "axios": "latest",
-    "archiver": "latest",
-    "ws": "latest",
-    "http": "latest"
+    "archiver": "latest"
   }
 }
